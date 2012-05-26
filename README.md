@@ -3,6 +3,8 @@ PasswordReuse
 
 A Firefox extension to detect password reuse
 
+This extension was originally written as an entry for the 2012 HITB HackWeekDay competition.
+
 TODO
 ====
 
