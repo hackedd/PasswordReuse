@@ -1,0 +1,8 @@
+<!ENTITY passwordreuse.mainMenu.label        "Password Reuse">
+<!ENTITY passwordreuse.mainMenu.accesskey    "P">
+
+<!ENTITY passwordreuse.checkMenu.label       "Check Stored Passwords">
+<!ENTITY passwordreuse.checkMenu.accesskey   "C">
+
+<!ENTITY passwordreuse.preferencesMenu.label     "Preferences">
+<!ENTITY passwordreuse.preferencesMenu.accesskey "P">
