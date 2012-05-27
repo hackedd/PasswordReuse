@@ -60,9 +60,12 @@ PasswordReuse.CheckStoredPasswords = {
       for (var i = 0; i < usage[key].logins.length; i += 1)
       {
         var login = usage[key].logins[i];
-        dump(i + " - " + login.username + "\n");
-        this.addTreeRow(children, "", "", login.username, "******", 
-          login.hostname.replace(/^http(s?):\/\//, ""));
+        var domainClass = PasswordReuse.Classify.classifyDomain(login.hostname);
+        this.addTreeRow(children, "",
+          PasswordReuse.Classify.getDescription(domainClass),
+          login.hostname.replace(/^http(s?):\/\//, ""),
+          login.username, "******"
+        );
       }
 
       reused += 1;
