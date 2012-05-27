@@ -23,7 +23,7 @@ PasswordReuse.Util = {
       return;
 
     var i = 0;
-    for (prop in obj)
+    for (var prop in obj)
     {
       i++;
       if (typeof(obj[prop]) == "object")

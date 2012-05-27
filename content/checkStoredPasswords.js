@@ -8,7 +8,7 @@ PasswordReuse.CheckStoredPasswords = {
   checkStoredPasswords: function(event)
   {
     var logins = this.getStoredPasswords();
-    var list = document.getElementById("check-stored-passwords-list");
+    var treechildren = document.getElementById("check-stored-passwords-list-children");
     var usage = {};
     var reused = 0;
 
@@ -47,13 +47,24 @@ PasswordReuse.CheckStoredPasswords = {
       if (usage[key].count == 1)
         continue;
 
-      this.addListRow(list,
-        usage[key].count,
-        PasswordReuse.Classify.getDescription(usage[key].domainClass),
-        usage[key].usernames.join(", "),
-        "(hidden)",
-        usage[key].sites.join(", ")
+      var parentItem = this.addTreeRow(treechildren,
+        usage[key].count + " Sites",
+        PasswordReuse.Classify.getDescription(usage[key].domainClass)
       );
+
+      var children = document.createElement("treechildren");
+      parentItem.setAttribute("container", "true");
+      parentItem.setAttribute("open", "false");
+      parentItem.appendChild(children);
+
+      for (var i = 0; i < usage[key].logins.length; i += 1)
+      {
+        var login = usage[key].logins[i];
+        dump(i + " - " + login.username + "\n");
+        this.addTreeRow(children, "", "", login.username, "******", 
+          login.hostname.replace(/^http(s?):\/\//, ""));
+      }
+
       reused += 1;
     }
 
@@ -69,17 +80,21 @@ PasswordReuse.CheckStoredPasswords = {
     return loginManager.getAllLogins({});
   },
 
-  addListRow: function(list)
+  addTreeRow: function(treechildren)
   {
-    var item = document.createElement("listitem");
+    var item = document.createElement("treeitem"),
+        row = document.createElement("treerow");
 
     for (var i = 1; i < arguments.length; i += 1)
     {
-      var cell = document.createElement("listcell");
+      var cell = document.createElement("treecell");
       cell.setAttribute("label", arguments[i]);
-      item.appendChild(cell);
+      row.appendChild(cell);
     }
 
-    list.appendChild(item);
-  },
+    item.appendChild(row);
+    treechildren.appendChild(item);
+
+    return item;
+  }
 };
